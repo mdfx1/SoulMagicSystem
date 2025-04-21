@@ -1,7 +1,6 @@
-package me.sandrp.soulMagicSystem.customFood.soulApple;
+package me.sandrp.soulMagicSystem.customWeapons.gravityWand;
 
-import me.sandrp.soulMagicSystem.customFood.soulApple.ingredients.SoulBlood;
-import me.sandrp.soulMagicSystem.customWeapons.luminaSword.ingredients.LuminaCrystal;
+import me.sandrp.soulMagicSystem.customWeapons.ingredients.SoulCrystal;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -13,25 +12,25 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
 
-public class SoulApple {
-    private static final String ITEM_ID = "soul_apple";
+public class GravityWand {
+    private static final String ITEM_ID = "gravity_wand";
     private static NamespacedKey key;
 
     public static ItemStack createItem() {
-        ItemStack item = new ItemStack(Material.ENCHANTED_GOLDEN_APPLE);
+        ItemStack item = new ItemStack(Material.STICK);
         ItemMeta meta = item.getItemMeta();
 
-        meta.setDisplayName("§fSoul Apple");
-        meta.setLore(List.of("§9Food"));
-
+        meta.setDisplayName("§fGravity Wand");
+        meta.setLore(List.of("§9Utility"));
         meta.setCustomModelData(1);
+        meta.setMaxStackSize(1);
         meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, ITEM_ID);
 
         item.setItemMeta(meta);
         return item;
     }
 
-    public static boolean isSoulApple(ItemStack item) {
+    public static boolean isGravityWand(ItemStack item) {
         if (item == null || !item.hasItemMeta()) return false;
         return item.getItemMeta().getPersistentDataContainer().has(key, PersistentDataType.STRING);
     }
@@ -42,13 +41,13 @@ public class SoulApple {
 
         recipe.shape(
                 " M ",
-                "MSM",
-                " M "
+                " S ",
+                " S "
         );
 
         // M = Custom Ingredient, S = Stick
-        recipe.setIngredient('M', new RecipeChoice.ExactChoice(SoulBlood.createItem()));
-        recipe.setIngredient('S', Material.GOLDEN_APPLE);
+        recipe.setIngredient('M', new RecipeChoice.ExactChoice(SoulCrystal.createItem()));
+        recipe.setIngredient('S', Material.STICK);
 
         plugin.getServer().addRecipe(recipe);
     }

@@ -1,7 +1,6 @@
-package me.sandrp.soulMagicSystem.customWeapons.gravityGun;
+package me.sandrp.soulMagicSystem.customFood.soulMeal;
 
-import me.sandrp.soulMagicSystem.customWeapons.gravityGun.ingredients.GravityCrystal;
-import me.sandrp.soulMagicSystem.customWeapons.luminaSword.ingredients.LuminaCrystal;
+import me.sandrp.soulMagicSystem.customFood.soulMeal.ingredients.SoulBlood;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -13,16 +12,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
 
-public class GravityWand {
-    private static final String ITEM_ID = "gravity_wand";
+public class SoulMeal {
+    private static final String ITEM_ID = "soul_meal";
     private static NamespacedKey key;
 
     public static ItemStack createItem() {
-        ItemStack item = new ItemStack(Material.STICK);
+        ItemStack item = new ItemStack(Material.MUSHROOM_STEW);
         ItemMeta meta = item.getItemMeta();
 
-        meta.setDisplayName("§fGravity Wand");
-        meta.setLore(List.of("§9Utility"));
+        meta.setDisplayName("§fSoul Meal");
+        meta.setLore(List.of("§9Food"));
+
         meta.setCustomModelData(1);
         meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, ITEM_ID);
 
@@ -30,7 +30,7 @@ public class GravityWand {
         return item;
     }
 
-    public static boolean isGravityWand(ItemStack item) {
+    public static boolean isSoulMeal(ItemStack item) {
         if (item == null || !item.hasItemMeta()) return false;
         return item.getItemMeta().getPersistentDataContainer().has(key, PersistentDataType.STRING);
     }
@@ -40,14 +40,15 @@ public class GravityWand {
         ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(plugin, ITEM_ID), result);
 
         recipe.shape(
-                " M ",
-                " S ",
-                " S "
+                "FFF",
+                "MSM",
+                "FFF"
         );
 
         // M = Custom Ingredient, S = Stick
-        recipe.setIngredient('M', new RecipeChoice.ExactChoice(GravityCrystal.createItem()));
-        recipe.setIngredient('S', Material.STICK);
+        recipe.setIngredient('M', new RecipeChoice.ExactChoice(SoulBlood.createItem()));
+        recipe.setIngredient('S', Material.BOWL);
+        recipe.setIngredient('F', Material.SOUL_SAND);
 
         plugin.getServer().addRecipe(recipe);
     }
